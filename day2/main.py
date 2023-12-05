@@ -7,18 +7,22 @@ f = open("input.txt", "r")
 def main():
     total = 0
     for line in f:
-        red, green, blue = 0, 0, 0
-        for x in re.finditer("red", line):
-            red += int(line[x.start() - 3] + line[x.start() - 2])
-        for x in re.finditer("green", line):
-            green += int(line[x.start() - 3] + line[x.start() - 2])
-        for x in re.finditer("blue", line):
-            blue += int(line[x.start() - 3] + line[x.start() - 2])
-        if red <= 12 and  green <= 13 and  blue <= 14:
-            end_index = line.find(":")
-            game_index = line[5:end_index].strip()
-            total += int(game_index)
-            print(game_index)
+        output_index = line.find(":")
+        split_line = line[output_index+1:].split(";")
+        for segment in split_line:
+            red, green, blue = 0, 0, 0
+            for x in re.finditer("red", segment):
+                red += int(segment[x.start() - 3] + segment[x.start() - 2])
+            for x in re.finditer("green", segment):
+                green += int(segment[x.start() - 3] + segment[x.start() - 2])
+            for x in re.finditer("blue", segment):
+                blue += int(segment[x.start() - 3] + segment[x.start() - 2])
+            if red > 12 or green > 13 or blue > 14:
+                continue
+            else:
+                game_index = line[5:output_index].strip()
+                total += int(game_index)
+                print(game_index)
     print(total)
 
 
