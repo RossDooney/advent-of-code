@@ -2,21 +2,59 @@ import os
 
 
 f = open("input.txt", "r")
-num_array = ["0", "zero", "1", "one", "2". "two", "3", "three", "4", "four", "5", "five"
-             "6", "six", "7", "seven", "8", "eight", "9", "nine", "10", "ten"]
+num_list = ["1","2","3","4","5","6","7","8","9","one","two","three","four", "five", "six", "seven", "eight", "nine"]
+
+num_dict = {
+    'one': '1',
+    'two': '2',
+    'three': '3',
+    'four': '4',
+    'five': '5',
+    'six': '6',
+    'seven': '7',
+    'eight': '8',
+    'nine': '9',
+    'zero': '0'
+}
 
 def main():
     total = 0
+    number = 0
     for line in f:
-        first = None
-        last = None
-        index = 0
-        for num in num_array:
-            if num in line:
-                if first is None:
-                    first = num
-                
-
+        start_index = -1
+        start_word = ""
+        end_index = -1
+        end_word = ""
+        for num in num_list:
+            new_index = line.find(num)
+            if new_index == -1:
+                continue
+            if start_word == "":
+                start_word = num
+                start_index = new_index
+            if  start_index > new_index:
+                start_word = num
+                start_index = new_index
+            if end_word == "":
+                end_word = num
+                end_index = new_index
+            if end_index < new_index:
+                end_word = num
+                end_index = new_index
+        
+        start_word = convert_to_number(start_word)
+        end_word = convert_to_number(end_word)
+        number = start_word + end_word
+        total += int(number)
     print(total)
+        
+
+            
+def convert_to_number(num):
+    try:
+        return num_dict[num]
+    except KeyError:
+        return num
+
 
 main()
