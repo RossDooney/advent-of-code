@@ -4,6 +4,7 @@ import re
 
 def main():
     part1()
+    part2()
 
 def part1():
     f = open("input.txt", "r")
@@ -21,8 +22,20 @@ def part1():
           
                 
         total *= index
-
     print(total)
+    f.close()
+
+def part2():
+    f = open("input.txt", "r")
+    inputTxt = f.readlines()
+    time = ''.join(re.sub("\s\s+" , " ", inputTxt[0].split(":")[1]).split(" "))
+    distance = ''.join(re.sub("\s\s+" , " ", inputTxt[1].split(":")[1]).split(" "))
+    
+    for x in range(int(time)):
+        if int(distance) < (x * (int(time)-x)):
+            print(int(time) - (2 * x) + 1)
+            break
+
     
     
 
