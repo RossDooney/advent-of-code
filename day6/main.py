@@ -28,17 +28,12 @@ def part1():
 def part2():
     f = open("input.txt", "r")
     inputTxt = f.readlines()
-    time = ''.join(re.sub("\s\s+" , " ", inputTxt[0].split(":")[1]).split(" "))
-    distance = ''.join(re.sub("\s\s+" , " ", inputTxt[1].split(":")[1]).split(" "))
+    time = int(''.join(re.sub("\s\s+" , " ", inputTxt[0].split(":")[1]).split(" ")))
+    distance = int(''.join(re.sub("\s\s+" , " ", inputTxt[1].split(":")[1]).split(" ")))
     
-    for x in range(int(time)):
-        if int(distance) < (x * (int(time)-x)):
-            print(int(time) - (2 * x) + 1)
+    for x in range(time):
+        if distance < (x * (time-x)):
+            print(time - (2 * x) + 1)
             break
 
-    
-    
-
-
-    
 main()
