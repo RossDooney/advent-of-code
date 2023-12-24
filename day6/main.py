@@ -16,7 +16,10 @@ def part1():
         index = 0
         for y in range(int(time[x])):
             if int(distance[x]) < (y * (int(time[x])-y)):
-                index += 1
+                index =  int(time[x]) - (2 * y)  + 1
+                break
+          
+                
         total *= index
 
     print(total)
