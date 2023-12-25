@@ -2,7 +2,7 @@ import os
 import re
 import time
 
-
+i = 0
 
 def main():
     part1()
@@ -31,15 +31,20 @@ def part1():
     f.close()
 
 def part2():
+    global i
     f = open("input.txt", "r")
     inputTxt = f.readlines()
     time = int(''.join(re.sub("\s\s+" , " ", inputTxt[0].split(":")[1]).split(" ")))
     distance = int(''.join(re.sub("\s\s+" , " ", inputTxt[1].split(":")[1]).split(" ")))
     
-    index = searchLowestIndex(time, distance, round(time/2), 1)
+    index = searchLowestIndex(time, distance, round(time/4), 1, round(time/2))
     print(time - (2 * index) + 1)
+    print("index : ",index)
+    print(i)
 
-def searchLowestIndex(time, dist, index, lowest):
+def searchLowestIndex(time, dist, index, lowest, highest):
+    global i
+    i += 1
     score = index * (time - index)
     lowest_check = (index-1) * (time - (index - 1))
 
@@ -48,13 +53,15 @@ def searchLowestIndex(time, dist, index, lowest):
         return index
     elif dist < score:
         new_index = round((index + lowest)/2)
-        index = searchLowestIndex(time,dist,new_index,lowest)
+
+        highest = index
+        index = searchLowestIndex(time,dist,new_index,lowest,highest)
         return index
     else:
-        new_index = (index + (time/2))/2
+        new_index = round(index + highest)/2
         lowest = index
         
-        index = searchLowestIndex(time,dist,new_index, lowest)
+        index = searchLowestIndex(time,dist,new_index, lowest,highest)
 
     return index
 
